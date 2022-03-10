@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:flutter_driver/driver_extension.dart';
 import 'package:integration_test/integration_test_driver_extended.dart';
 
 Future<void> main() async {
+  enableFlutterDriverExtension();
   try {
     await integrationDriver(
       onScreenshot: (String screenshotName, List<int> screenshotBytes) async {
