@@ -43,3 +43,37 @@ import 'dart:ui' show Color, Brightness;
        ^
 ...
 ```
+
+## Step 3
+
+Updating code to match the latest instructions at: https://github.com/flutter/flutter/tree/master/packages/integration_test
+
+Gives the error described in: https://github.com/flutter/flutter/issues/91668
+
+Using the workaround described in the issue, ie.
+
+updating `flutter/packages/integration_test/ios/Classes/IntegrationTestPlugin.m`
+
+by adding a body to:
+
+```objc
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+```
+
+to make it:
+
+```objc
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
+    [[IntegrationTestPlugin instance] setupChannels:registrar.messenger];
+}
+```
+
+And screenshots now work.
+
+## Usage
+
+```sh
+flutter drive \                                   
+  --driver=test_driver/integration_test.dart \
+  --target=integration_test/screenshot_test.dart
+```
