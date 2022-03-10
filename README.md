@@ -1,16 +1,18 @@
 # screenshots_test
 
-A new Flutter project.
+Testing taking screenshots in GitHub Actions.
 
-## Getting Started
+Followed these articles:
 
-This project is a starting point for a Flutter application.
+- [Take screenshot during Flutter integration tests - DEV Community](https://dev.to/mjablecnik/take-screenshot-during-flutter-integration-tests-435k)
+- [Flutter automated screenshot testing using the integration_test package | Codemagic Blog](https://blog.codemagic.io/flutter-automated-screenshot-testing/)
 
-A few resources to get you started if this is your first Flutter project:
+Running `flutter drive --driver=integration_test/screenshot_test_driver.dart --target=integration_test/screenshot_test.dart -d <iphone_emulator_id>`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+gives:
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```sh
+flutter: 'package:flutter/src/foundation/binding.dart':
+Failed assertion: line 55 pos 12:
+flutter: '!_debugInitialized': is not true.
+```
