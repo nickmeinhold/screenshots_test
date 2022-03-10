@@ -1,0 +1,25 @@
+name: ios screenshot
+on: push
+jobs:
+  screenshot:
+    runs-on: macOS-latest
+    
+    strategy:
+      matrix:
+        device:
+        - "iPhone 11"
+        - "iPhone 13"
+    
+    steps:
+
+    - name: "Start Simulator"
+      run: xcrun simctl boot "${{ matrix.device }}"
+
+    - uses: actions/checkout@v1
+    
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'
+    
+    - name: "Run integration tests"
+      run: "flutter test integration_test"
