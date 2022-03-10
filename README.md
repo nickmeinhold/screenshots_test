@@ -70,10 +70,22 @@ to make it:
 
 And screenshots now work.
 
-## Usage
+### Use with flutter drive
 
 ```sh
 flutter drive \                                   
   --driver=test_driver/integration_test.dart \
   --target=integration_test/screenshot_test.dart
 ```
+
+## Step 4
+
+### Use with flutter test
+
+Saving the image data in the integration test allows us to use:
+
+```sh
+flutter test integration_test/screenshot_test.dart
+```
+
+And remove the driver code.

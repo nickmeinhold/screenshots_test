@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:screenshots_test/main.dart' as app;
@@ -15,6 +17,9 @@ void main() {
 
     // Trigger a frame.
     await tester.pumpAndSettle();
-    await binding.takeScreenshot('screenshot-1');
+    var screenshotBytes = await binding.takeScreenshot('screenshot-1');
+
+    final File image = File('/tmp/screenshot.png');
+    image.writeAsBytesSync(screenshotBytes);
   });
 }
