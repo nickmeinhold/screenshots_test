@@ -2,6 +2,8 @@
 
 Testing taking screenshots in GitHub Actions.
 
+See Notion > [Integration Testing](https://www.notion.so/reference-material/Integration-Testing-1c3d3880e0fe4e62a69d14045704715d)
+
 ## Step 1
 
 Following these articles
