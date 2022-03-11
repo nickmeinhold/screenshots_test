@@ -20,6 +20,9 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable'
+
+    - name: "Replace problem file"
+      run: cp $GITHUB_WORKSPACE/IntegrationTestPlugin.m $FLUTTER_ROOT/packages/integration_test/ios/Classes/IntegrationTestPlugin.m
     
     - name: "Run integration tests"
       run: "flutter test integration_test"
