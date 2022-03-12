@@ -1,28 +1,39 @@
-name: ios screenshot
-on: push
+name: ios screenshots
+on: workflow_dispatch
 jobs:
   screenshot:
     runs-on: macOS-latest
-    
+
     strategy:
       matrix:
         device:
-        - "iPhone 11"
-        - "iPhone 13"
-    
+          - "iPhone 11"
+          - "iPhone 13"
+
     steps:
+      - name: "Start Simulator"
+        run: xcrun simctl boot "${{ matrix.device }}"
 
-    - name: "Start Simulator"
-      run: xcrun simctl boot "${{ matrix.device }}"
+      - name: "List simulators"
+        run: xcrun simctl list
 
-    - uses: actions/checkout@v1
-    
-    - uses: subosito/flutter-action@v1
-      with:
-        channel: 'stable'
+      - uses: actions/checkout@v1
 
-    - name: "Replace problem file"
-      run: cp $GITHUB_WORKSPACE/IntegrationTestPlugin.m $FLUTTER_ROOT/packages/integration_test/ios/Classes/IntegrationTestPlugin.m
-    
-    - name: "Run integration tests"
-      run: "flutter test integration_test"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+
+      - name: "Replace problem file"
+        run: cp $GITHUB_WORKSPACE/IntegrationTestPlugin.m $FLUTTER_ROOT/packages/integration_test/ios/Classes/IntegrationTestPlugin.m
+
+      - name: "Run integration tests"
+        run: "flutter test integration_test/screenshot_test.dart"
+
+      - name: Install SSH Private Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+
+      - name: Copy Screenshots
+        run: rsync -azv -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }}" /tmp/screenshots/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:screenshots
